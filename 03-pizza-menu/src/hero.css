@@ -54,7 +54,7 @@
   .hero__content {
     left: 20px;
     top: 80px;
-
+    max-width: 400px;
     h1 {
       font-size: 32px;
     }
