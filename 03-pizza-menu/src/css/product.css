@@ -1,0 +1,104 @@
+.product__container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-block: 122px;
+
+  @media (max-width: 1024px) {
+    padding: 48px 20px;
+  }
+}
+
+.product__header {
+  width: 100%;
+  max-width: 750px;
+  margin-inline: auto;
+  margin-bottom: 80px;
+  text-align: center;
+
+  h2 {
+    font-size: 100px;
+    margin-bottom: 18px;
+  }
+
+  p {
+    font-size: 24px;
+    color: #4d4d4d;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 40px;
+
+    h2 {
+      font-size: 48px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+.product_info {
+  display: flex;
+  gap: 80px;
+
+  @media (max-width: 1024px) {
+    gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.product__image {
+  width: 100%;
+  max-width: 790px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.product__plans {
+  width: 100%;
+  max-width: 710px;
+}
+
+.product__plans-card {
+  padding-bottom: 48px;
+
+  h3 {
+    font-size: 48px;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px dotted #000;
+    text-align: right;
+  }
+
+  h4 {
+    font-size: 68px;
+    margin-bottom: 24px;
+  }
+
+  p {
+    font-size: 24px;
+    color: #4d4d4d;
+  }
+
+  @media (max-width: 1024px) {
+    h3 {
+      font-size: 24px;
+    }
+
+    h4 {
+      font-size: 40px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+}

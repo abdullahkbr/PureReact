@@ -3,7 +3,7 @@ import logo from "./Logo.svg";
 import openIcon from "./open.svg";
 import closeIcon from "./close.svg";
 import cartIcon from "./cart.svg";
-import "./header.css";
+import "./css/header.css";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
