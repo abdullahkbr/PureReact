@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./header";
 import Hero from "./hero";
-import Product from "./product";
+import Product from "./pages/product";
 import "./index.css";
 import "./css/resets.css";
 import reportWebVitals from "./reportWebVitals";
