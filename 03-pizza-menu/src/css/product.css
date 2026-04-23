@@ -42,6 +42,10 @@
   display: flex;
   gap: 80px;
 
+  &.secondary__container {
+    flex-direction: row-reverse;
+  }
+
   @media (max-width: 1024px) {
     gap: 40px;
   }

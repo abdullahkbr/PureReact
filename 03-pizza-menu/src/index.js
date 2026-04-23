@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import Header from "./header";
 import Hero from "./hero";
 import Product from "./pages/product";
+import ProductSecondary from "./pages/product-secondary";
 import "./index.css";
 import "./css/resets.css";
 import reportWebVitals from "./reportWebVitals";
@@ -12,6 +13,8 @@ root.render(
   <React.StrictMode>
     <Header />
     <Hero />
+    <Product />
+    <ProductSecondary />
     <Product />
   </React.StrictMode>,
 );

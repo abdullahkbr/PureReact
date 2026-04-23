@@ -1,18 +1,18 @@
 import "../css/product.css";
-import ProductImage from "../assets/product.png";
-function Product() {
+import ProductImage from "../assets/product-2.png";
+function ProductSecondary() {
   return (
     <section className="product">
       <div className="product__container">
         <div className="product__header">
-          <h2>Starters</h2>
+          <h2>Mains</h2>
           <p>
             This is a section of your menu. Give your section a brief
             description
           </p>
         </div>
 
-        <div className="product_info">
+        <div className="product_info secondary__container">
           <div className="product__image">
             <img src={ProductImage} alt="Product" />
           </div>
@@ -22,26 +22,26 @@ function Product() {
               <h3>$20</h3>
 
               <div>
-                <h4>Grilled Okra and Tomatoes </h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                <h4>Deep Sea Snow White Cod Fillet</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               </div>
             </div>
 
             <div className="product__plans-card">
-              <h3>$18</h3>
+              <h3>$22</h3>
 
               <div>
-                <h4>Cucumber Salad</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                <h4>Steak With Rosemary Butter</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               </div>
             </div>
 
             <div className="product__plans-card">
-              <h3>$12</h3>
+              <h3>$20</h3>
 
               <div>
-                <h4>Basil Pancakes</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                <h4>Steaks with Grilled Kimchi</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               </div>
             </div>
           </div>
@@ -51,4 +51,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default ProductSecondary;
