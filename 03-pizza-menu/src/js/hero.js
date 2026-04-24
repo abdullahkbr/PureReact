@@ -1,5 +1,5 @@
-import heroImage from "./hero.png";
-import "./css/hero.css";
+import heroImage from "../hero.png";
+import "../css/hero.css";
 function Hero() {
   return (
     <section className="hero">

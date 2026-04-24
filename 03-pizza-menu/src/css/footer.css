@@ -1,0 +1,13 @@
+.footer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 132px 138px 70px 138px;
+  background-color: #233000;
+  color: #fff;
+}
+.footer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

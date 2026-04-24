@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Header from "./header";
-import Hero from "./hero";
-import Product from "./pages/product";
-import ProductSecondary from "./pages/product-secondary";
+import Header from "./js/header";
+import Hero from "./js/hero";
+import Product from "./js/product";
+import ProductSecondary from "./js/product-secondary";
+import Footer from "./js/footer";
 import "./index.css";
 import "./css/resets.css";
 import reportWebVitals from "./reportWebVitals";
@@ -16,6 +17,7 @@ root.render(
     <Product />
     <ProductSecondary />
     <Product />
+    <Footer />
   </React.StrictMode>,
 );
 

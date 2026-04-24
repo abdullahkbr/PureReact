@@ -270,6 +270,10 @@ const {
 
 // console.log(getYearArrow(book.published));
 
+// Cart management
+let cart = [];
+const PRICE_PER_BOOK = 19.99;
+
 // Display book details by book name
 const resultsContainer = document.getElementById("results");
 
@@ -294,6 +298,7 @@ function displayBooks(books) {
       <div class="genres">
         ${book.genres.map((genre) => `<span class="genre-tag">${genre}</span>`).join("")}
       </div>
+      <button class="cart-btn" onclick="addtoCart(${book.id})">Add to Cart - $${PRICE_PER_BOOK.toFixed(2)}</button>
     </div>
   `,
     )
@@ -324,9 +329,15 @@ function closeAddBookModal() {
 
 // Close modal when clicking outside
 window.onclick = function (event) {
-  const modal = document.getElementById("addBookModal");
-  if (event.target === modal) {
+  const addBookModal = document.getElementById("addBookModal");
+  const cartModal = document.getElementById("cartModal");
+
+  if (event.target === addBookModal) {
     closeAddBookModal();
+  }
+
+  if (event.target === cartModal) {
+    closeCartModal();
   }
 };
 
@@ -390,4 +401,117 @@ function addbook(newbook) {
   data.push(bookToAdd);
   displayBooks(data);
   console.log("Book added successfully:", bookToAdd);
+}
+
+function addtoCart(bookId) {
+  const book = getBookById(bookId);
+
+  if (!book) {
+    alert("Book not found!");
+    return;
+  }
+
+  // Check if book already in cart
+  const existingItem = cart.find((item) => item.id === bookId);
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      price: PRICE_PER_BOOK,
+      quantity: 1,
+    });
+  }
+
+  updateCartCount();
+  console.log("Book added to cart:", book.title);
+}
+
+function updateCartCount() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById("cartCount").textContent = totalItems;
+}
+
+function openCartModal() {
+  const cartModal = document.getElementById("cartModal");
+  const cartItemsContainer = document.getElementById("cartItems");
+  const cartTotalDiv = document.getElementById("cartTotal");
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML =
+      '<div class="cart-empty">Your cart is empty</div>';
+    cartTotalDiv.style.display = "none";
+    cartModal.style.display = "block";
+    return;
+  }
+
+  let totalPrice = 0;
+  cartItemsContainer.innerHTML = cart
+    .map((item) => {
+      const itemTotal = item.price * item.quantity;
+      totalPrice += itemTotal;
+      return `
+      <div class="cart-item">
+        <div>
+          <h4>${item.title}</h4>
+          <p><strong>Author:</strong> ${item.author}</p>
+          <p><strong>Price:</strong> $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}</p>
+        </div>
+        <div class="cart-item-actions">
+          <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+
+  document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+  cartTotalDiv.style.display = "block";
+  cartModal.style.display = "block";
+}
+
+function closeCartModal() {
+  document.getElementById("cartModal").style.display = "none";
+}
+
+function removeFromCart(bookId) {
+  cart = cart.filter((item) => item.id !== bookId);
+  updateCartCount();
+
+  if (cart.length === 0) {
+    document.getElementById("cartItems").innerHTML =
+      '<div class="cart-empty">Your cart is empty</div>';
+    document.getElementById("cartTotal").style.display = "none";
+  } else {
+    openCartModal(); // Refresh the cart display
+  }
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+  const booksList = cart
+    .map((item) => `${item.title} (x${item.quantity})`)
+    .join("\n");
+
+  alert(
+    `Order Summary:\n\n${booksList}\n\nTotal: $${totalPrice.toFixed(2)}\n\nThank you for your purchase!`,
+  );
+
+  cart = [];
+  updateCartCount();
+  closeCartModal();
+  document.getElementById("cartItems").innerHTML =
+    '<div class="cart-empty">Your cart is empty</div>';
+  document.getElementById("cartTotal").style.display = "none";
 }
