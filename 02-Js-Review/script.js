@@ -1,3 +1,4 @@
+const inputdata = document.getElementById("inputdata");
 const data = [
   {
     id: 1,
@@ -237,11 +238,156 @@ const {
   },
 } = book;
 
-console.log("Title:", title);
-console.log("Spanish Title:", spanishTitle);
-console.log("Author:", author);
-for (let i = 0; i < genres.length; i++) {
-  console.log(genres[i]);
+// console.log("Title:", title);
+// console.log("Spanish Title:", spanishTitle);
+// console.log("Author:", author);
+// for (let i = 0; i < genres.length; i++) {
+//   console.log(genres[i]);
+// }
+// console.log("Goodreads Rating:", goodreadsRating);
+// console.log("LibraryThing Rating:", librarythingRating);
+
+// //tempalate literals
+
+// const summary = `${title} is a book written by ${author}. It belongs to the genres of ${genres.join(", ")}. The book has received a rating of ${goodreadsRating} on Goodreads and ${librarythingRating} on LibraryThing. The Spanish title of the book is "${spanishTitle}".`;
+
+// console.log(summary);
+
+// //ternary operators
+
+// const isGood = goodreadsRating > 4.5 ? "Yes" : "No";
+// console.log("Is the book good?", isGood);
+
+// //traditional function
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+
+// console.log(getYear(book.published));
+
+// //Arrow function argument (i.e (str)) , arrow (=>) and what we want to return (str.split("-")[0])
+// const getYearArrow = (str) => str.split("-")[0];
+
+// console.log(getYearArrow(book.published));
+
+// Display book details by book name
+const resultsContainer = document.getElementById("results");
+
+function displayBooks(books) {
+  if (books.length === 0) {
+    resultsContainer.innerHTML = '<div class="no-results">No books found</div>';
+    return;
+  }
+
+  resultsContainer.innerHTML = books
+    .map(
+      (book) => `
+    <div class="book-card">
+      <h2>${book.title}</h2>
+      <p><strong>Author:</strong> ${book.author}</p>
+      <p><strong>Published:</strong> ${book.published}</p>
+      <p><strong>Pages:</strong> ${book.pages}</p>
+      <p><strong>Spanish Title:</strong> ${book.translations.spanish}</p>
+      <p><strong>French Title:</strong> ${book.translations.french}</p>
+      <p><strong>Goodreads Rating:</strong> ${book.reviews.goodreads.rating} (${book.reviews.goodreads.ratingsCount} ratings)</p>
+      <p><strong>LibraryThing Rating:</strong> ${book.reviews.librarything.rating} (${book.reviews.librarything.ratingsCount} ratings)</p>
+      <div class="genres">
+        ${book.genres.map((genre) => `<span class="genre-tag">${genre}</span>`).join("")}
+      </div>
+    </div>
+  `,
+    )
+    .join("");
 }
-console.log("Goodreads Rating:", goodreadsRating);
-console.log("LibraryThing Rating:", librarythingRating);
+
+// Display all books on initial load
+displayBooks(data);
+
+// Search functionality
+inputdata.addEventListener("input", (e) => {
+  const searchValue = e.target.value.toLowerCase();
+  const searchResults = data.filter((book) =>
+    book.title.toLowerCase().includes(searchValue),
+  );
+  displayBooks(searchResults);
+});
+
+// Modal functions
+function openAddBookModal() {
+  document.getElementById("addBookModal").style.display = "block";
+}
+
+function closeAddBookModal() {
+  document.getElementById("addBookModal").style.display = "none";
+  document.getElementById("addBookForm").reset();
+}
+
+// Close modal when clicking outside
+window.onclick = function (event) {
+  const modal = document.getElementById("addBookModal");
+  if (event.target === modal) {
+    closeAddBookModal();
+  }
+};
+
+// Form submission handler
+document.getElementById("addBookForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  // Get form values
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const published = document.getElementById("published").value;
+  const pages = parseInt(document.getElementById("pages").value);
+  const genres = document
+    .getElementById("genres")
+    .value.split(",")
+    .map((g) => g.trim());
+  const spanish = document.getElementById("spanish").value;
+  const french = document.getElementById("french").value;
+  const goodreadsRating = parseFloat(
+    document.getElementById("goodreadsRating").value,
+  );
+  const librarythingRating = parseFloat(
+    document.getElementById("librarythingRating").value,
+  );
+
+  // Create book object
+  const newBook = {
+    title,
+    author,
+    published,
+    pages,
+    genres,
+    hasMovieAdaptation: false,
+    translations: {
+      spanish,
+      french,
+      urdu: "",
+    },
+    reviews: {
+      goodreads: {
+        rating: goodreadsRating,
+        ratingsCount: 0,
+        reviewsCount: 0,
+      },
+      librarything: {
+        rating: librarythingRating,
+        ratingsCount: 0,
+        reviewsCount: 0,
+      },
+    },
+  };
+
+  addbook(newBook);
+  closeAddBookModal();
+});
+
+function addbook(newbook) {
+  const lastBook = data[data.length - 1];
+  const newId = lastBook ? lastBook.id + 1 : 1;
+  const bookToAdd = { id: newId, ...newbook };
+  data.push(bookToAdd);
+  displayBooks(data);
+  console.log("Book added successfully:", bookToAdd);
+}

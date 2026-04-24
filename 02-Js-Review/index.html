@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Search</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        background-color: #f5f5f5;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: rgb(86, 43, 43);
+
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-size: 24px;
+        }
+
+        button {
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      }
+
+      .search-container {
+        margin-bottom: 30px;
+      }
+      input[type="search"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+      }
+      .results-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .book-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        min-width: 300px;
+      }
+      .book-card h2 {
+        color: #333;
+        margin-top: 0;
+      }
+      .book-card p {
+        margin: 8px 0;
+        color: #666;
+      }
+      .book-card strong {
+        color: #333;
+      }
+      .genres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+      }
+      .genre-tag {
+        background-color: #e0e0e0;
+        padding: 3px 10px;
+        border-radius: 3px;
+        font-size: 12px;
+      }
+      .no-results {
+        text-align: center;
+        color: #999;
+        font-size: 18px;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        height: 400px;
+        overflow: scroll;
+      }
+
+      .modal h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+      }
+
+      .form-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+
+      .form-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .btn-submit {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .btn-submit:hover {
+        background-color: #45a049;
+      }
+
+      .btn-cancel {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .btn-cancel:hover {
+        background-color: #da190b;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="#">Books</a>
+      <button onclick="openAddBookModal()">Add books</button>
+    </header>
+    <h1>Book Search</h1>
+    <div class="search-container">
+      <input
+        type="search"
+        id="inputdata"
+        placeholder="Search by book name..."
+      />
+    </div>
+    <div class="results-container" id="results"></div>
+
+    <!-- Add Book Modal -->
+    <div id="addBookModal" class="modal">
+      <div class="modal-content">
+        <h2>Add New Book</h2>
+        <form id="addBookForm">
+          <div class="form-group">
+            <label for="title">Title *</label>
+            <input type="text" id="title" required />
+          </div>
+          <div class="form-group">
+            <label for="author">Author *</label>
+            <input type="text" id="author" required />
+          </div>
+          <div class="form-group">
+            <label for="published">Published Date (YYYY-MM-DD) *</label>
+            <input
+              type="text"
+              id="published"
+              placeholder="2024-12-01"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="pages">Pages *</label>
+            <input type="number" id="pages" required />
+          </div>
+          <div class="form-group">
+            <label for="genres">Genres (comma separated) *</label>
+            <input
+              type="text"
+              id="genres"
+              placeholder="programming, javascript, frontend"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="spanish">Spanish Title *</label>
+            <input type="text" id="spanish" required />
+          </div>
+          <div class="form-group">
+            <label for="french">French Title *</label>
+            <input type="text" id="french" required />
+          </div>
+          <div class="form-group">
+            <label for="goodreadsRating">Goodreads Rating *</label>
+            <input
+              type="number"
+              id="goodreadsRating"
+              min="0"
+              max="5"
+              step="0.1"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="librarythingRating">LibraryThing Rating *</label>
+            <input
+              type="number"
+              id="librarythingRating"
+              min="0"
+              max="5"
+              step="0.1"
+              required
+            />
+          </div>
+          <div class="form-buttons">
+            <button
+              type="button"
+              class="btn-cancel"
+              onclick="closeAddBookModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit">Add Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
