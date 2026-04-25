@@ -6,8 +6,105 @@
   background-color: #233000;
   color: #fff;
 }
+
+.footer__logo {
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100px;
+
+    img {
+      width: 100%;
+    }
+  }
+}
 .footer__header {
+  width: 100%;
+  max-width: 1440px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  border-bottom: 1px dotted #fff;
+  padding-bottom: 137px;
+
+  @media (max-width: 1240px) {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+  }
+
+  h4 {
+    margin-bottom: 55px;
+    font-size: 32px;
+
+    @media (max-width: 1240px) {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 18px;
+
+    @media (max-width: 1240px) {
+      text-align: center;
+      font-size: 16px;
+    }
+  }
+}
+
+.footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  p {
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1240px) {
+    gap: 10px;
+  }
+}
+
+.footer__form {
+  form {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input {
+      width: 100%;
+      max-width: 530px;
+      padding: 20px 40px;
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      font-size: 18px;
+
+      &::placeholder {
+        color: #fff;
+        opacity: 0.5;
+      }
+    }
+
+    button {
+      background: #5e6600;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      padding: 20px 45px;
+
+      @media (max-width: 768px) {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+  }
 }
